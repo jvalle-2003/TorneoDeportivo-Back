@@ -15,6 +15,6 @@ api.get('/getEquipo/:league/:id', mdAuth.ensureAuth, equiposController.getEquipo
 api.get('/searchEquipos', mdAuth.ensureAuth, equiposController.searchEquipos);
 api.post('/saveEquipo/:league', mdAuth.ensureAuth, equiposController.saveEquipo);
 api.put('/updateEquipo/:league/:id', mdAuth.ensureAuth,  equiposController.updateEquipo);
-api.delete('/deleteEquipos/:league/:id', mdAuth.ensureAuth,equiposController.deleteEquipo);
+api.delete('/deleteEquipo/:league/:id', mdAuth.ensureAuth,equiposController.deleteEquipo);
 
 module.exports = api;

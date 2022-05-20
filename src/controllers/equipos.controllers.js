@@ -114,7 +114,7 @@ exports.getEquipos = async (req, res) => {
         }
     } catch (err) {
         console.log(err);
-        return res.status(500).send({ message: 'Error obteniendo los equipos' });
+        return res.status(500).send({ message: 'Error getting the teams' });
     }
 }
 
@@ -129,7 +129,7 @@ exports.getEquipo = async (req, res) => {
 
         let msg = validate.validateData(data);
         if (!msg) {
-            const checkUserLeague = await League.findOne({ _id: data.league, equipos: equipoId }).populate('equipos').lean();
+            const checkUserLeague = await League.findOne({ _id: data.league, equipos: equipoId }).lean();
             if (checkUserLeague === null || checkUserLeague.user != userId) {
                 return res.status(400).send({ message: 'You cant see this team' })
             } else {
@@ -164,7 +164,7 @@ exports.deleteEquipo = async (req, res) => {
             if (checkUserLeague === null || checkUserLeague.user != userId) {
                 return res.status(400).send({ message: 'You cant delete this team' })
             } else {
-                const deleteEquipo = await Equipo.findOneAndDelete({ _id: teamId });
+                const deleteEquipo = await Equipo.findOneAndDelete({ _id: equipoId });
                 await checkUserLeague.equipos.pull(deleteEquipo);
 
                 const deleteJornada = await Jornada.findOneAndDelete({ _id: checkUserLeague.jornadas.at(-1) });
@@ -173,7 +173,7 @@ exports.deleteEquipo = async (req, res) => {
                 if (!deleteEquipo) {
                     return res.status(500).send({ message: 'Equipo not found or already deleted' });
                 } else {
-                    return res.send({ message: 'Equipo deleted successfully', deleteTeam });
+                    return res.send({ message: 'Equipo deleted successfully', deleteEquipo });
                 }
             }
         } else {
